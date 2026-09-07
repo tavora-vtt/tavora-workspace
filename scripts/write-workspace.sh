@@ -20,8 +20,16 @@ for repo in "${NODE_REPOS[@]}"; do
   fi
 done
 
+go_version="1.25.0"
+for repo in ${go_members[@]+"${go_members[@]}"}; do
+  declared=$(awk '/^go [0-9]/ { print $2; exit }' "$ROOT/$repo/go.mod")
+  if [ -n "$declared" ] && [ "$(printf '%s\n%s\n' "$go_version" "$declared" | sort -V | tail -1)" = "$declared" ]; then
+    go_version="$declared"
+  fi
+done
+
 {
-  echo "go 1.25.0"
+  echo "go $go_version"
   echo
   echo "use ("
   for repo in ${go_members[@]+"${go_members[@]}"}; do
@@ -54,5 +62,5 @@ pnpm-lock.yaml
 node_modules/
 IGNORE
 
-printf 'wrote go.work with %d modules and pnpm-workspace.yaml with %d packages\n' \
-  "${#go_members[@]}" "${#node_members[@]}"
+printf 'wrote go.work (go %s) with %d modules and pnpm-workspace.yaml with %d packages\n' \
+  "$go_version" "${#go_members[@]}" "${#node_members[@]}"
