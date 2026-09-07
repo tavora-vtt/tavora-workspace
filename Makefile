@@ -48,7 +48,7 @@ status:
 dev:
 	@echo "server on :30000, web on :5173"
 	@trap 'kill 0' EXIT; \
-	(cd "$(ROOT)/tavora-server" && go run ./cmd/tavora) & \
+	(cd "$(ROOT)/tavora-server" && TAVORA_PROTOCOL_JSON=1 go run ./cmd/tavora) & \
 	(cd "$(ROOT)/tavora-web" && pnpm dev) & \
 	wait
 
