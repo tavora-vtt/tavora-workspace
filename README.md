@@ -6,6 +6,9 @@ behave like a single checkout while you work, and nothing that ships.
 Why it is split this way, and how a change spanning two repositories is handled, is in
 [ADR 0007](https://github.com/tavora-vtt/tavora-docs/blob/main/adr/0007-repository-topology.md).
 
+> Links to `tavora-docs` point at a repository that is currently private, so they resolve
+> only for members of the organisation. The design rationale will open up with it.
+
 ## Start here
 
 ```
