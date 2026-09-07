@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="${1:?usage: write-workspace.sh <container-directory>}"
 
 GO_REPOS=(tavora-protocol tavora-server)
-NODE_REPOS=(tavora-protocol tavora-sdk tavora-dice tavora-web tavora-system-dnd5e tavora-system-wod5e)
+NODE_REPOS=(tavora-sdk tavora-dice tavora-web tavora-system-dnd5e tavora-system-wod5e)
 
 go_members=()
 for repo in "${GO_REPOS[@]}"; do
