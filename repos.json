@@ -1,0 +1,13 @@
+{
+  "owner": "tavora-vtt",
+  "repositories": [
+    { "name": "tavora-protocol",     "license": "Apache-2.0", "runtimes": ["go", "node"], "publishes": ["go-module", "npm"] },
+    { "name": "tavora-sdk",          "license": "Apache-2.0", "runtimes": ["node"],       "publishes": ["npm"] },
+    { "name": "tavora-dice",         "license": "Apache-2.0", "runtimes": ["node"],       "publishes": ["npm"] },
+    { "name": "tavora-server",       "license": "AGPL-3.0",   "runtimes": ["go"],         "publishes": ["binary", "container"] },
+    { "name": "tavora-web",          "license": "AGPL-3.0",   "runtimes": ["node"],       "publishes": ["bundle"] },
+    { "name": "tavora-system-dnd5e", "license": "MIT",        "runtimes": ["node"],       "publishes": ["tvpkg"] },
+    { "name": "tavora-system-wod5e", "license": "MIT",        "runtimes": ["node"],       "publishes": ["tvpkg"] },
+    { "name": "tavora-docs",         "license": "CC-BY-4.0",  "runtimes": [],             "publishes": ["site"] }
+  ]
+}
