@@ -6,7 +6,7 @@ NODE_REPOS := tavora-protocol tavora-sdk tavora-dice tavora-web tavora-system-dn
 ALL_REPOS  := tavora-protocol tavora-sdk tavora-dice tavora-server tavora-web \
               tavora-system-dnd5e tavora-system-wod5e tavora-docs
 
-.PHONY: help bootstrap clone link status dev check fmt clean-workspace
+.PHONY: help bootstrap clone link status dev check standalone fmt clean-workspace
 
 help:
 	@echo "bootstrap  clone every repository and wire the workspace"
@@ -15,6 +15,7 @@ help:
 	@echo "status     one line of git status per repository"
 	@echo "dev        run the server and the web dev server together"
 	@echo "check      vet, test and type check everything"
+	@echo "standalone verify every module builds without the workspace"
 
 bootstrap: clone link
 	@echo "workspace ready at $(ROOT)"
@@ -51,7 +52,7 @@ dev:
 	(cd "$(ROOT)/tavora-web" && pnpm dev) & \
 	wait
 
-check:
+check: standalone
 	@echo "== go =="
 	@cd "$(ROOT)/tavora-server" && go vet ./... && go test ./...
 	@cd "$(ROOT)/tavora-protocol" && go vet ./... && go build ./...
@@ -59,6 +60,15 @@ check:
 	@cd "$(ROOT)" && pnpm -r --if-present run check
 	@echo "== docs =="
 	@cd "$(ROOT)/tavora-docs" && python3 tools/check-links.py && python3 tools/check-style.py
+
+standalone:
+	@echo "== standalone, as a clean clone sees it =="
+	@for repo in $(GO_REPOS); do \
+		printf "  %-20s " "$$repo"; \
+		( cd "$(ROOT)/$$repo" && GOWORK=off go build ./... ) || { \
+			echo "FAILS without the workspace, run 'GOWORK=off go mod tidy' in $$repo"; exit 1; }; \
+		echo "ok"; \
+	done
 
 fmt:
 	@cd "$(ROOT)/tavora-server" && gofmt -w .
